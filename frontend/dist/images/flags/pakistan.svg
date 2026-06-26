@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pakistan">
+  <defs>
+    <clipPath id="pk-circle">
+      <circle cx="32" cy="32" r="32"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#pk-circle)">
+    <rect width="64" height="64" fill="#01411C"/>
+    <rect width="18" height="64" fill="#FFFFFF"/>
+    <circle cx="24" cy="32" r="9" fill="#01411C"/>
+    <circle cx="26.5" cy="32" r="7.5" fill="#FFFFFF"/>
+    <circle cx="28.5" cy="32" r="2" fill="#01411C"/>
+  </g>
+</svg>

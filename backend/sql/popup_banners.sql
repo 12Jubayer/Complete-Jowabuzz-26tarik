@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS popup_banners (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(120) NOT NULL,
+  heading VARCHAR(255) NOT NULL,
+  body TEXT NOT NULL,
+  image_url VARCHAR(500) NULL,
+  cta_label VARCHAR(120) NULL,
+  cta_link VARCHAR(500) NULL,
+  display_order INT NOT NULL DEFAULT 0,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_popup_banners_active_order (is_active, display_order)
+);

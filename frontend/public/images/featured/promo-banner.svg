@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="480" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1424"/>
+      <stop stop-color="#101b31"/>
+      <stop offset="0.55" stop-color="#152238"/>
+      <stop offset="1" stop-color="#0a1424"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(340 180) rotate(90) scale(220)">
+      <stop stop-color="#22c55e" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120 420) rotate(90) scale(180)">
+      <stop stop-color="#4ade80" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#4ade80" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#f5d76e"/>
+      <stop stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="640" fill="url(#bg)"/>
+  <rect width="480" height="640" fill="url(#glowA)"/>
+  <rect width="480" height="640" fill="url(#glowB)"/>
+  <circle cx="360" cy="120" r="72" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+  <path d="M344 104L376 136M376 104L344 136" stroke="rgba(255,255,255,0.16)" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="170" cy="250" rx="88" ry="110" fill="rgba(34,197,94,0.12)"/>
+  <path d="M120 360C120 280 170 220 230 220C290 220 340 280 340 360V430H120V360Z" fill="rgba(245,215,110,0.18)"/>
+  <circle cx="230" cy="190" r="52" fill="rgba(245,215,110,0.22)"/>
+  <path d="M188 188C188 160 206 142 230 142C254 142 272 160 272 188" fill="rgba(255,255,255,0.12)"/>
+  <path d="M300 430C330 390 360 350 390 320C410 350 420 390 420 430H300Z" fill="rgba(34,197,94,0.22)"/>
+  <circle cx="390" cy="300" r="34" fill="rgba(255,255,255,0.14)"/>
+  <path d="M70 500C110 450 150 420 200 410C250 420 290 450 330 500" stroke="url(#gold)" stroke-width="4" stroke-linecap="round"/>
+  <rect x="0" y="520" width="480" height="120" fill="rgba(0,0,0,0.35)"/>
+</svg>

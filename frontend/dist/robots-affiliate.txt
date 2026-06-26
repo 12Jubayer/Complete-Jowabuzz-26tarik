@@ -1,0 +1,21 @@
+User-agent: *
+Disallow: /movecash/
+Disallow: /admin/
+Disallow: /agent
+Disallow: /agent/
+Disallow: /agent-app
+Disallow: /jbcash-agent
+Disallow: /affiliate/dashboard
+Disallow: /affiliate/app
+Disallow: /affiliate/referrals
+Disallow: /affiliate/commission
+Disallow: /affiliate/settlements
+Disallow: /affiliate/withdraw
+Disallow: /affiliate/marketing
+Disallow: /affiliate/profile
+
+Allow: /affiliate
+Allow: /affiliate/login
+Allow: /affiliate/signup
+
+Sitemap: https://jowabuzzaffiliate.com/sitemap-affiliate.xml

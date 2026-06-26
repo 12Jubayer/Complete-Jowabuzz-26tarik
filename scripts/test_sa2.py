@@ -1,0 +1,10 @@
+import paramiko
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101', 22, 'root', 'Jowabuzz@12', timeout=30)
+sftp = c.open_sftp()
+sftp.put(r'c:\Users\ASUS\Downloads\zip\JB-main(1)\JB-main\backend\scripts\test_superace2.js', '/www/wwwroot/jowabuzz/backend/scripts/test_superace2.js')
+sftp.close()
+_, o, e = c.exec_command('cd /www/wwwroot/jowabuzz/backend && node scripts/test_superace2.js 2>&1 | tail -5', timeout=180000)
+print(o.read().decode('utf-8', 'replace'))
+c.close()

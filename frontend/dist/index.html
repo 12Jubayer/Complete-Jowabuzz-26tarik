@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/images/logo.png" data-main-site="1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jowabuzz - Cricket Exchange & Casino</title>
+    <link rel="canonical" href="https://jowabuzz.com/" />
+    <meta name="robots" content="index, follow" />
+    <script>
+      (function () {
+        var host = String(window.location.hostname || '').toLowerCase().replace(/^www\./, '');
+        var path = String(window.location.pathname || '');
+        var search = String(window.location.search || '');
+        var hash = String(window.location.hash || '');
+        var shop = 'https://jowabuzz.shop';
+
+        if (host === 'jowabuzz.com') {
+          var isAdminPath = path.indexOf('/admin') === 0;
+
+          if (isAdminPath) {
+            try {
+              sessionStorage.removeItem('jbcashApp');
+              localStorage.removeItem('jbcashApp');
+            } catch (e) {}
+
+            document.querySelectorAll(
+              'link[rel="manifest"][href*="movecash"], link[rel="apple-touch-icon"][href*="movecash"], link[rel="apple-touch-icon"][href*="jbcash"]',
+            ).forEach(function (node) {
+              node.parentNode.removeChild(node);
+            });
+
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function (regs) {
+                regs.forEach(function (reg) {
+                  reg.unregister();
+                });
+              }).catch(function () {});
+            }
+
+            if ('caches' in window) {
+              caches.keys().then(function (keys) {
+                keys.forEach(function (key) {
+                  caches.delete(key);
+                });
+              }).catch(function () {});
+            }
+
+            return;
+          }
+
+          if (path === '/agent-app' || path === '/jbcash-agent') {
+            window.location.replace(shop + '/agent-app' + (search || '?from=movecash') + hash);
+            return;
+          }
+
+          if (path.indexOf('/agent/') === 0) {
+            window.location.replace(shop + path + search + hash);
+            return;
+          }
+
+          if (
+            path.indexOf('/movecash/') === 0
+            || path.indexOf('/affiliate/') === 0
+            || path === '/affiliate'
+            || path === '/agent'
+          ) {
+            window.location.replace('/');
+            return;
+          }
+
+          try {
+            sessionStorage.removeItem('jbcashApp');
+            localStorage.removeItem('jbcashApp');
+          } catch (e) {}
+
+          document.querySelectorAll(
+            'link[rel="manifest"][href*="movecash"], link[rel="apple-touch-icon"][href*="movecash"], link[rel="apple-touch-icon"][href*="jbcash"]',
+          ).forEach(function (node) {
+            node.parentNode.removeChild(node);
+          });
+
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              regs.forEach(function (reg) {
+                var scriptUrl = (reg.active && reg.active.scriptURL)
+                  || (reg.installing && reg.installing.scriptURL)
+                  || (reg.waiting && reg.waiting.scriptURL)
+                  || '';
+                if (scriptUrl.indexOf('movecash-sw.js') !== -1) {
+                  reg.unregister();
+                }
+              });
+            }).catch(function () {});
+          }
+
+          var manifest = document.createElement('link');
+          manifest.rel = 'manifest';
+          manifest.href = '/manifest.webmanifest';
+          manifest.setAttribute('data-main-site', '1');
+          document.head.appendChild(manifest);
+
+          var icon = document.querySelector("link[rel='icon']");
+          if (icon) {
+            icon.href = '/images/logo.png';
+            icon.type = 'image/png';
+          }
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-CBrXAMbW.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-misc-CEWPm66Y.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-BB9tsc3Z.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-router-DqG_9oXp.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-icons-DCGlAsJ-.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-motion-CJwlNdkI.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-socket-CmWqgDFt.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CaPbxlqW.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

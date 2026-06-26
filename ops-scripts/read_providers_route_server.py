@@ -1,0 +1,11 @@
+import paramiko
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101', 22, 'root', 'Jowabuzz@12', timeout=30)
+_, o, _ = c.exec_command("sed -n '1179,1210p' /www/wwwroot/jowabuzz/backend/services/gameCatalogService.js")
+print(o.read().decode())
+_, o, _ = c.exec_command("grep -rn 'providers' /www/wwwroot/jowabuzz/backend/routes/publicSiteGamesRoutes.js /www/wwwroot/jowabuzz/frontend/src/services/siteGameService.js 2>/dev/null")
+print(o.read().decode())
+_, o, _ = c.exec_command("grep -rn 'ProviderStrip\\|publicGameProviders' /www/wwwroot/jowabuzz/frontend/src 2>/dev/null")
+print(o.read().decode())
+c.close()

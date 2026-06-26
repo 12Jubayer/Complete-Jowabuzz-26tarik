@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS site_settings (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  setting_key VARCHAR(100) NOT NULL,
+  setting_value JSON NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_site_settings_key (setting_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

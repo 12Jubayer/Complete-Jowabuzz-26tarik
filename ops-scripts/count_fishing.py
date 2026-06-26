@@ -1,0 +1,10 @@
+import paramiko, json
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101', 22, 'root', 'Jowabuzz@12', timeout=30)
+_, o, _ = c.exec_command("curl -s 'http://127.0.0.1:3001/api/site/games?category=fishing&limit=1'", timeout=30)
+raw = o.read().decode('utf-8', 'replace')
+d = json.loads(raw)
+print('total', d.get('pagination', {}).get('total', 'n/a'))
+print('sample', d.get('data', [{}])[0].get('title'))
+c.close()

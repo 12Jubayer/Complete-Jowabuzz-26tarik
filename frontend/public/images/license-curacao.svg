@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="120" height="72" viewBox="0 0 120 72" role="img" aria-label="Gaming Curacao">
+  <rect width="120" height="72" rx="8" fill="#0f172a"/>
+  <circle cx="28" cy="36" r="16" fill="#22c55e"/>
+  <text x="28" y="41" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="14" font-weight="700">GC</text>
+  <text x="72" y="32" text-anchor="middle" fill="#22c55e" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700">GAMING</text>
+  <text x="72" y="46" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700">CURACAO</text>
+</svg>

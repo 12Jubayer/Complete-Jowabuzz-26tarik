@@ -1,0 +1,5 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="Crash">
+  <rect width="96" height="96" rx="16" fill="#111827"/>
+  <path d="M24 62 L48 28 L72 62 Z" fill="none" stroke="#22c55e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M48 28v34" stroke="#ef4444" stroke-width="3"/>
+</svg>

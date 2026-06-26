@@ -1,0 +1,11 @@
+import paramiko
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101', 22, 'root', 'Jowabuzz@12', timeout=30)
+_,o,_=c.exec_command('grep -n "applyBalanceDelta" /www/wwwroot/jowabuzz/backend/services/depositBonusService.js')
+print(o.read().decode())
+_,o,_=c.exec_command('grep -rn "function applyBalanceDelta\\|export async function applyBalanceDelta" /www/wwwroot/jowabuzz/backend/services --include="*.js"')
+print(o.read().decode())
+_,o,_=c.exec_command('grep -n "applyBalanceDelta" -A25 /www/wwwroot/jowabuzz/backend/services/userWalletService.js | head -40')
+print(o.read().decode())
+c.close()

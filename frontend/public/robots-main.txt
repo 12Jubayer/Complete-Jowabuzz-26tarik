@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /movecash/
+Disallow: /admin/
+Disallow: /agent-app
+Disallow: /jbcash-agent
+Disallow: /agent
+Disallow: /agent/
+Disallow: /affiliate
+Disallow: /affiliate/
+
+Allow: /
+Allow: /home
+Allow: /promotions
+Allow: /cricket
+Allow: /casino
+Allow: /profile
+
+Sitemap: https://jowabuzz.com/sitemap.xml

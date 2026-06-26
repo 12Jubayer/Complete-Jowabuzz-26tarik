@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="120" height="72" viewBox="0 0 120 72" role="img" aria-label="Anjouan eGaming">
+  <rect width="120" height="72" rx="8" fill="#111827"/>
+  <path d="M28 18h16l8 18-8 18H28L20 36 28 18z" fill="#d4af37" stroke="#f5d76e" stroke-width="1"/>
+  <path d="M36 30h8v12h-8z" fill="#111827"/>
+  <text x="74" y="32" text-anchor="middle" fill="#d4af37" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700">ANJOUAN</text>
+  <text x="74" y="46" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700">eGAMING</text>
+</svg>

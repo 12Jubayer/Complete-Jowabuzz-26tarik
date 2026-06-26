@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="Casino">
+  <rect width="96" height="96" rx="16" fill="#111827"/>
+  <rect x="28" y="34" width="16" height="22" rx="2" fill="#22c55e"/>
+  <rect x="52" y="34" width="16" height="22" rx="2" fill="#22c55e"/>
+  <circle cx="36" cy="45" r="3" fill="#111827"/>
+  <circle cx="60" cy="45" r="3" fill="#111827"/>
+</svg>

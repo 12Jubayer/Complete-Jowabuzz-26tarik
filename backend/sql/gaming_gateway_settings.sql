@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS gaming_gateway_settings (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  provider_name VARCHAR(120) NOT NULL DEFAULT 'Oracle Gaming API',
+  provider_status ENUM('active', 'inactive') NOT NULL DEFAULT 'inactive',
+  api_mode ENUM('demo', 'production') NOT NULL DEFAULT 'demo',
+  api_base_url VARCHAR(500) NOT NULL DEFAULT 'https://www.oracleapi.co.uk/getgameurl',
+  launch_url VARCHAR(500) NOT NULL DEFAULT 'https://crazybet99.com/getgameurl/v2',
+  api_key VARCHAR(500) NOT NULL DEFAULT '',
+  secret_key VARCHAR(500) NOT NULL DEFAULT '',
+  operator_id VARCHAR(120) NOT NULL DEFAULT '',
+  callback_url VARCHAR(500) NOT NULL DEFAULT 'https://jowabuzz.com/api/oracle/callback',
+  refund_url VARCHAR(500) NOT NULL DEFAULT 'https://jowabuzz.com/api/oracle/callback',
+  webhook_secret VARCHAR(500) NOT NULL DEFAULT '',
+  currency VARCHAR(10) NOT NULL DEFAULT 'BDT',
+  supported_games JSON NULL,
+  supported_providers JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS gaming_transactions (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NULL,
+  username VARCHAR(100) NOT NULL DEFAULT '',
+  account_id VARCHAR(120) NULL,
+  provider_code VARCHAR(50) NULL,
+  game_code VARCHAR(100) NULL,
+  amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  bet_type VARCHAR(30) NOT NULL,
+  transaction_id VARCHAR(120) NOT NULL,
+  verification_key VARCHAR(120) NULL,
+  status ENUM('pending', 'completed', 'failed', 'refunded') NOT NULL DEFAULT 'completed',
+  raw_payload JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_gaming_transactions_tx (transaction_id),
+  INDEX idx_gaming_transactions_user_id (user_id),
+  INDEX idx_gaming_transactions_username (username),
+  INDEX idx_gaming_transactions_bet_type (bet_type),
+  INDEX idx_gaming_transactions_created_at (created_at),
+  CONSTRAINT fk_gaming_transactions_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);

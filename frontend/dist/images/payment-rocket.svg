@@ -1,0 +1,12 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="88" height="64" viewBox="0 0 88 64" role="img" aria-label="Rocket">
+  <defs>
+    <linearGradient id="rocketBg" x1="0" y1="0" x2="88" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#9333EA"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <rect width="88" height="64" rx="8" fill="url(#rocketBg)"/>
+  <path d="M44 16l6 14h-5l1.5 12-3.5-8-3.5 8 1.5-12h-5l6-14z" fill="#fff"/>
+  <circle cx="44" cy="22" r="2.5" fill="#9333EA"/>
+  <text x="44" y="54" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="800">Rocket</text>
+</svg>

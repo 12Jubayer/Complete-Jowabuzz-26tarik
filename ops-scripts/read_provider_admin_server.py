@@ -1,0 +1,10 @@
+import paramiko
+c=paramiko.SSHClient(); c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101',22,'root','Jowabuzz@12',timeout=30)
+_,o,_=c.exec_command("sed -n '95,130p' /www/wwwroot/jowabuzz/backend/services/gameCatalogService.js", timeout=20)
+print('mapProviderRow:', o.read().decode())
+_,o,_=c.exec_command("sed -n '260,290p' /www/wwwroot/jowabuzz/backend/services/gameCatalogService.js", timeout=20)
+print('listAdmin:', o.read().decode())
+_,o,_=c.exec_command("cat /www/wwwroot/jowabuzz/backend/routes/adminGameRoutes.js", timeout=20)
+print('routes:', o.read().decode())
+c.close()

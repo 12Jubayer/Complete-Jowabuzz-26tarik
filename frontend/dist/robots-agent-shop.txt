@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /movecash/
+Disallow: /admin/
+Disallow: /agent-app
+Disallow: /jbcash-agent
+Disallow: /agent/login
+Disallow: /agent/dashboard
+Disallow: /agent/transactions
+Disallow: /affiliate/
+
+Allow: /agent
+
+Sitemap: https://jowabuzz.shop/sitemap-agent.xml

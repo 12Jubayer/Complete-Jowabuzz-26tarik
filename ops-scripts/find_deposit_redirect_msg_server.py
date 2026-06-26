@@ -1,0 +1,11 @@
+import paramiko
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101', 22, 'root', 'Jowabuzz@12', timeout=30)
+_, o, _ = c.exec_command("grep -rn 'Awaiting provider callback\\|forwarded successfully' /www/wwwroot/jowabuzz/frontend/src /www/wwwroot/jowabuzz/backend --include='*.js' --include='*.jsx' 2>/dev/null | head -20")
+print(o.read().decode())
+_, o, _ = c.exec_command("grep -rn 'winypay\\|paymentUrl\\|redirect\\|jump' /www/wwwroot/jowabuzz/frontend/src/pages/profile/ProfileDepositPage.jsx /www/wwwroot/jowabuzz/frontend/src/pages/profile/ProfileDepositPage.jsx 2>/dev/null | head -30")
+c.exec_command("grep -rn 'ProfileDeposit\\|deposit' /www/wwwroot/jowabuzz/frontend/src/pages/profile/*.jsx 2>/dev/null | head -5")
+_, o, _ = c.exec_command("grep -rn 'forwarded\\|Awaiting' /www/wwwroot/jowabuzz/frontend/src --include='*.jsx' --include='*.js'")
+print(o.read().decode())
+c.close()

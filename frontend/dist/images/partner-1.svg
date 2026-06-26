@@ -1,0 +1,8 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="120" height="72" viewBox="0 0 120 72" role="img" aria-label="Atletico Madrid Partner">
+  <rect width="120" height="72" rx="8" fill="#0a1424"/>
+  <rect x="18" y="16" width="28" height="40" rx="4" fill="#CE3524"/>
+  <rect x="18" y="16" width="28" height="13" fill="#fff"/>
+  <rect x="18" y="43" width="28" height="13" fill="#fff"/>
+  <text x="78" y="30" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="9" font-weight="700">ATLETICO</text>
+  <text x="78" y="44" text-anchor="middle" fill="#d4af37" font-family="Segoe UI,Arial,sans-serif" font-size="9" font-weight="700">DE MADRID</text>
+</svg>

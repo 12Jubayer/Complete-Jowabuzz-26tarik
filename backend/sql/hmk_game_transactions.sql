@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS hmk_game_transactions (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  member_account VARCHAR(120) NOT NULL,
+  provider VARCHAR(30) NOT NULL DEFAULT 'HMK',
+  provider_code VARCHAR(20) NOT NULL DEFAULT 'HMK',
+  game_uid VARCHAR(100) NOT NULL DEFAULT '',
+  game_round VARCHAR(120) NOT NULL,
+  bet_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  win_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  credit_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  balance_before DECIMAL(15, 2) NULL,
+  balance_after DECIMAL(15, 2) NULL,
+  currency VARCHAR(10) NOT NULL DEFAULT 'USDT',
+  status ENUM('processed', 'duplicate', 'failed', 'refund', 'rollback', 'cancel') NOT NULL DEFAULT 'processed',
+  raw_payload JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_hmk_game_round (game_round),
+  INDEX idx_hmk_user_id (user_id),
+  INDEX idx_hmk_member_account (member_account)
+);

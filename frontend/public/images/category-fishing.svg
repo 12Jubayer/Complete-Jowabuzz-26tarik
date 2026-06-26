@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="Fishing">
+  <rect width="96" height="96" rx="16" fill="#111827"/>
+  <path d="M24 58c8-10 18-14 28-12 6 1 10 5 12 10 2-1 5-2 8-1 4 2 6 6 6 10-1 4-4 7-8 8-6 2-12-1-16-5-8 2-16 0-22-6-2-2-4-4-8-4z" fill="#14532d" stroke="#22c55e" stroke-width="2"/>
+  <path d="M52 34l14-8 4 6-10 8" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="58" cy="42" r="3" fill="#86efac"/>
+</svg>

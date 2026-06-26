@@ -1,0 +1,11 @@
+import paramiko, json
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('103.168.173.101', 22, 'root', 'Jowabuzz@12', timeout=30)
+_, o, _ = c.exec_command("grep -rn 'listPublicGameProviders\\|public-providers\\|public/providers' /www/wwwroot/jowabuzz/backend 2>/dev/null | head -15")
+print(o.read().decode())
+_, o, _ = c.exec_command('curl -s "http://127.0.0.1:3001/api/site/providers?category=all" | python3 -c "import sys,json; d=json.load(sys.stdin); rows=d.get(\'data\',[])[:15]; [print(r.get(\'code\'), (r.get(\'logo\') or \'\')[:70]) for r in rows]"')
+print(o.read().decode())
+_, o, _ = c.exec_command("mysql -uroot -p656940d50e847e3f jowabuzz -N -e \"SELECT code, provider_logo FROM providers WHERE provider_logo IS NOT NULL AND provider_logo != '' AND enabled=1 LIMIT 20\"")
+print('db logos:', o.read().decode())
+c.close()

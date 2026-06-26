@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS softapi_game_transactions (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  member_account VARCHAR(120) NOT NULL,
+  provider VARCHAR(30) NOT NULL DEFAULT 'SOFTAPI',
+  provider_code VARCHAR(20) NOT NULL DEFAULT 'SDR',
+  game_uid VARCHAR(100) NOT NULL DEFAULT '',
+  game_round VARCHAR(120) NOT NULL,
+  bet_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  win_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  credit_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+  balance_before DECIMAL(15, 2) NULL,
+  balance_after DECIMAL(15, 2) NULL,
+  currency VARCHAR(10) NOT NULL DEFAULT 'BDT',
+  status ENUM('processed', 'duplicate', 'failed') NOT NULL DEFAULT 'processed',
+  raw_payload JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_softapi_game_round (game_round),
+  INDEX idx_softapi_user_id (user_id),
+  INDEX idx_softapi_member_account (member_account)
+);

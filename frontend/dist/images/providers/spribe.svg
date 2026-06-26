@@ -1,0 +1,5 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="120" height="48" viewBox="0 0 120 48" role="img" aria-label="SPRIBE">
+  <rect width="120" height="48" rx="8" fill="#0a1424"/>
+  <path d="M22 30l8-14 8 14h-5l-3-6-3 6h-5z" fill="#22c55e"/>
+  <text x="78" y="31" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="800">SPRIBE</text>
+</svg>

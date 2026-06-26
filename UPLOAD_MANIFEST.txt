@@ -1,0 +1,6 @@
+Jowabuzz COMPLETE production upload from 103.168.173.101
+Date: 2026-06-26T16:18:05Z
+Files in snapshot: 11195
+Includes: node_modules/, .env, backend/, frontend/, scripts/, ops-scripts/
+Note: ssh2/test/fixtures removed (fake test keys — GitHub blocks these only)
+Structure: identical to /www/wwwroot/jowabuzz

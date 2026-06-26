@@ -1,0 +1,6 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'>
+  <rect width='240' height='240' rx='24' fill='#111827'/>
+  <circle cx='120' cy='100' r='48' fill='none' stroke='#d4af37' stroke-width='4'/>
+  <path d='M88 170H152L140 120L120 88L100 120L88 170Z' fill='#22c55e' opacity='0.85'/>
+  <text x='120' y='210' text-anchor='middle' fill='#d4af37' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='700'>VIP</text>
+</svg>

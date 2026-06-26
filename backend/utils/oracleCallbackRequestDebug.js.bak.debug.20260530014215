@@ -1,0 +1,147 @@
+const ORACLE_CALLBACK_PATH_RE =
+  /\/api\/(?:oracle\/callback|oracle\/refund|wallet\/callback|gaming\/callback|seamless\/callback|getbalance|balance)(?:\?|$)/i;
+
+export function isOracleCallbackRequest(req) {
+  const url = String(req.originalUrl || req.url || '');
+  return ORACLE_CALLBACK_PATH_RE.test(url);
+}
+
+export function captureOracleCallbackRawBody(req, _res, buf) {
+  if (!isOracleCallbackRequest(req)) return;
+  req.rawBody = buf?.length ? buf.toString('utf8') : '';
+}
+
+export function mergeOracleCallbackPayload(req) {
+  const query = { ...(req.query || {}) };
+  const body =
+    req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)
+      ? { ...(req.body || {}) }
+      : {};
+  return { ...query, ...body };
+}
+
+function detectPayloadKind(req, contentType = '') {
+  const method = String(req.method || '').toUpperCase();
+  const type = String(contentType).toLowerCase();
+
+  if (method === 'GET' || method === 'HEAD') return 'query';
+  if (type.includes('application/json')) return 'json';
+  if (type.includes('application/x-www-form-urlencoded')) return 'form-urlencoded';
+  if (type.includes('multipart/form-data')) return 'multipart';
+  if (type) return type.split(';')[0].trim() || 'unknown';
+  if (req.body && Object.keys(req.body).length) return 'parsed-body';
+  return 'none';
+}
+
+function extractUserPlayerId(payload = {}) {
+  return (
+    payload.username ??
+    payload.user_name ??
+    payload.userName ??
+    payload.member_id ??
+    payload.memberId ??
+    payload.account_id ??
+    payload.accountId ??
+    payload.user_id ??
+    payload.userId ??
+    payload.player_id ??
+    payload.playerId ??
+    null
+  );
+}
+
+export function normalizeActionTypeLabel(betType = '') {
+  const normalized = String(betType || '').trim().toUpperCase();
+  if (['SETTLE', 'WIN', 'CREDIT', 'PAYOUT', 'PRIZE'].includes(normalized)) return 'WIN';
+  if (['BET', 'DEBIT', 'WAGER', 'STAKE'].includes(normalized)) return 'BET';
+  if (['ROLLBACK', 'CANCEL_BET', 'UNDO', 'CANCEL', 'REFUND'].includes(normalized)) {
+    return 'ROLLBACK';
+  }
+  if (
+    ['BALANCE', 'GETBALANCE', 'GET_BALANCE', 'BALANCE_INQUIRY', 'CHECK_BALANCE'].includes(
+      normalized,
+    )
+  ) {
+    return 'BALANCE';
+  }
+  return normalized || 'UNKNOWN';
+}
+
+function sanitizeHeaders(headers = {}) {
+  const copy = { ...headers };
+  for (const key of Object.keys(copy)) {
+    const value = copy[key];
+    if (typeof value === 'string' && value.length > 2000) {
+      copy[key] = `${value.slice(0, 2000)}…[truncated]`;
+    }
+  }
+  return copy;
+}
+
+function rawBodyForLog(req) {
+  if (req.rawBody !== undefined && req.rawBody !== null) {
+    return req.rawBody === '' ? null : req.rawBody;
+  }
+  if (String(req.method || '').toUpperCase() === 'GET') {
+    const url = String(req.originalUrl || req.url || '');
+    const queryIndex = url.indexOf('?');
+    return queryIndex >= 0 ? url.slice(queryIndex + 1) : null;
+  }
+  if (req.body && typeof req.body === 'object' && Object.keys(req.body).length) {
+    try {
+      return JSON.stringify(req.body);
+    } catch {
+      return String(req.body);
+    }
+  }
+  return null;
+}
+
+export function logOracleCallbackRequest(req, mergedPayload = {}, betType = '') {
+  const contentType = req.headers['content-type'] || null;
+  const actionType = normalizeActionTypeLabel(betType);
+
+  const entry = {
+    requestMethod: req.method,
+    queryParameters: req.query || {},
+    requestHeaders: sanitizeHeaders(req.headers),
+    rawRequestBody: rawBodyForLog(req),
+    payloadKind: detectPayloadKind(req, contentType),
+    jsonOrFormPayload: {
+      query: req.query || {},
+      body: req.body && typeof req.body === 'object' ? req.body : null,
+      merged: mergedPayload,
+    },
+    userPlayerId: extractUserPlayerId(mergedPayload),
+    actionType,
+    path: req.originalUrl || req.path,
+    ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.ip || null,
+    userAgent: String(req.headers['user-agent'] || '').slice(0, 300) || null,
+    contentType,
+  };
+
+  console.log('[ORACLE_CALLBACK_DEBUG]', JSON.stringify(entry));
+}
+
+export function shouldFormatGetBalanceProbeResponse(req, betType = '') {
+  const method = String(req.method || '').toUpperCase();
+  const action = normalizeActionTypeLabel(betType);
+  return method === 'GET' && action === 'BALANCE';
+}
+
+export function formatGetBalanceProbeResponse(result = {}) {
+  const balance = Number(result.balance ?? result.money ?? 0);
+  const ok = Boolean(result.success ?? result.status ?? (result.errorCode === 0));
+
+  if (!ok) {
+    return {
+      status: 'error',
+      balance: Number.isFinite(balance) ? balance : 0,
+    };
+  }
+
+  return {
+    status: 'success',
+    balance: Number.isFinite(balance) ? balance : 0,
+  };
+}

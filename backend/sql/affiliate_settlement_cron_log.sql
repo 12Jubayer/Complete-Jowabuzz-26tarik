@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS affiliate_settlement_cron_log (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  run_date DATE NOT NULL,
+  period_start DATE NOT NULL,
+  period_end DATE NOT NULL,
+  affiliates_processed INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_affiliate_settlement_cron_run (run_date, period_start, period_end)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

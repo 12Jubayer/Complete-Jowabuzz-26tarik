@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS commission_settings (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  agent_deposit_percent DECIMAL(5, 2) NOT NULL DEFAULT 5,
+  agent_withdraw_percent DECIMAL(5, 2) NOT NULL DEFAULT 2,
+  affiliate_deposit_percent DECIMAL(5, 2) NOT NULL DEFAULT 25,
+  affiliate_withdraw_percent DECIMAL(5, 2) NOT NULL DEFAULT 0,
+  super_affiliate_deposit_percent DECIMAL(5, 2) NOT NULL DEFAULT 10,
+  super_affiliate_withdraw_percent DECIMAL(5, 2) NOT NULL DEFAULT 0,
+  settlement_day TINYINT NOT NULL DEFAULT 3,
+  super_affiliate_settlement_day TINYINT NOT NULL DEFAULT 3,
+  auto_settlement TINYINT(1) NOT NULL DEFAULT 0,
+  manual_approval TINYINT(1) NOT NULL DEFAULT 1,
+  affiliate_weekly_settlement TINYINT(1) NOT NULL DEFAULT 1,
+  affiliate_manual_approval TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS commission_records (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  role_type ENUM('affiliate', 'super_affiliate') NOT NULL,
+  beneficiary_id BIGINT NOT NULL,
+  player_id BIGINT NULL,
+  transaction_id BIGINT NULL,
+  commission_type ENUM('deposit', 'withdraw') NOT NULL,
+  base_amount DECIMAL(15, 2) NOT NULL,
+  rate DECIMAL(5, 2) NOT NULL,
+  commission_amount DECIMAL(15, 2) NOT NULL,
+  status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
+  approved_by BIGINT NULL,
+  approved_at TIMESTAMP NULL DEFAULT NULL,
+  rejected_at TIMESTAMP NULL DEFAULT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_commission_records_transaction_role (transaction_id, role_type, beneficiary_id),
+  INDEX idx_commission_records_status (status),
+  INDEX idx_commission_records_role_type (role_type),
+  INDEX idx_commission_records_beneficiary (beneficiary_id),
+  INDEX idx_commission_records_created_at (created_at),
+  CONSTRAINT fk_commission_records_player FOREIGN KEY (player_id) REFERENCES users(id) ON DELETE SET NULL,
+  CONSTRAINT fk_commission_records_transaction FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE
+);

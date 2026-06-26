@@ -1,0 +1,32 @@
+{
+  "id": "/jowabuzz-affiliate-app",
+  "name": "JowaBuzz Affiliate",
+  "short_name": "Affiliate",
+  "description": "JowaBuzz Affiliate Panel",
+  "start_url": "/affiliate/dashboard",
+  "scope": "/affiliate",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1e1033",
+  "theme_color": "#7C3AED",
+  "icons": [
+    {
+      "src": "/logos/affiliate-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logos/affiliate-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logos/affiliate-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
