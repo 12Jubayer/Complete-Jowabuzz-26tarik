@@ -142,34 +142,9 @@ export async function registerAffiliate(req, res) {
     await connection.beginTransaction();
 
     const [existingByPhone] = await connection.query(
-      `SELECT id FROM users WHERE phone = ? LIMIT 1`,
+      `SELECT id, email, name FROM users WHERE phone = ? AND status <> 'deleted' LIMIT 1`,
       [phone],
     );
-
-    if (existingByPhone.length) {
-      await connection.rollback();
-      return res.status(409).json({ error: 'Phone number already registered. Please login instead.' });
-    }
-
-    const [existingByName] = await connection.query(
-      `SELECT id FROM users WHERE name = ? LIMIT 1`,
-      [name],
-    );
-
-    if (existingByName.length) {
-      await connection.rollback();
-      return res.status(409).json({ error: 'Username already exists' });
-    }
-
-    const [existingByEmail] = await connection.query(
-      `SELECT id FROM users WHERE email = ? LIMIT 1`,
-      [email],
-    );
-
-    if (existingByEmail.length) {
-      await connection.rollback();
-      return res.status(409).json({ error: 'Email already registered' });
-    }
 
     let referredByAffiliateId = null;
 
@@ -182,16 +157,96 @@ export async function registerAffiliate(req, res) {
 
     const passwordHash = await hashPassword(password);
 
-    const [userResult] = await connection.query(
-      `INSERT INTO users (name, email, phone, password_hash, role, balance, status)
-       VALUES (?, ?, ?, ?, 'user', 0, 'active')`,
-      [name, email, phone, passwordHash],
-    );
+    let userId;
+    let profile;
 
-    const userId = userResult.insertId;
-    const profile = await createAffiliateProfile(userId, referredByAffiliateId, connection, {
-      registeredAsAffiliate: true,
-    });
+    if (existingByPhone.length) {
+      const existingUser = existingByPhone[0];
+      userId = existingUser.id;
+
+      const [existingAffiliate] = await connection.query(
+        `SELECT id, referral_code, registered_as_affiliate
+         FROM affiliate_profiles
+         WHERE user_id = ?
+         LIMIT 1`,
+        [userId],
+      );
+
+      if (existingAffiliate.length && Number(existingAffiliate[0].registered_as_affiliate) === 1) {
+        await connection.rollback();
+        return res.status(409).json({ error: 'Affiliate account already exists. Please login instead.' });
+      }
+
+      if (email) {
+        const [existingByEmail] = await connection.query(
+          `SELECT id FROM users WHERE email = ? AND id <> ? AND status <> 'deleted' LIMIT 1`,
+          [email, userId],
+        );
+
+        if (existingByEmail.length) {
+          await connection.rollback();
+          return res.status(409).json({ error: 'Email already registered' });
+        }
+      }
+
+      await connection.query(
+        `UPDATE users
+         SET password_hash = ?,
+             email = CASE WHEN ? IS NOT NULL AND (email IS NULL OR TRIM(email) = '') THEN ? ELSE email END
+         WHERE id = ?`,
+        [passwordHash, email, email, userId],
+      );
+
+      if (existingAffiliate.length) {
+        await connection.query(
+          `UPDATE affiliate_profiles
+           SET registered_as_affiliate = 1,
+               status = 'pending',
+               registration_source = 'affiliate'
+           WHERE user_id = ?`,
+          [userId],
+        );
+        profile = {
+          id: existingAffiliate[0].id,
+          referralCode: existingAffiliate[0].referral_code,
+        };
+      } else {
+        profile = await createAffiliateProfile(userId, referredByAffiliateId, connection, {
+          registeredAsAffiliate: true,
+        });
+      }
+    } else {
+      const [existingByName] = await connection.query(
+        `SELECT id FROM users WHERE name = ? AND status <> 'deleted' LIMIT 1`,
+        [name],
+      );
+
+      if (existingByName.length) {
+        await connection.rollback();
+        return res.status(409).json({ error: 'Username already exists' });
+      }
+
+      const [existingByEmail] = await connection.query(
+        `SELECT id FROM users WHERE email = ? AND status <> 'deleted' LIMIT 1`,
+        [email],
+      );
+
+      if (existingByEmail.length) {
+        await connection.rollback();
+        return res.status(409).json({ error: 'Email already registered' });
+      }
+
+      const [userResult] = await connection.query(
+        `INSERT INTO users (name, email, phone, password_hash, role, balance, status)
+         VALUES (?, ?, ?, ?, 'user', 0, 'active')`,
+        [name, email, phone, passwordHash],
+      );
+
+      userId = userResult.insertId;
+      profile = await createAffiliateProfile(userId, referredByAffiliateId, connection, {
+        registeredAsAffiliate: true,
+      });
+    }
 
     await setAffiliateSettlementUserId({
       affiliateId: profile.id,
